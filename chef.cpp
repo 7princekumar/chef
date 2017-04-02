@@ -37,6 +37,7 @@ CUSTOMER::CUSTOMER(int order_count, char* order_array[order_count]){
 
 //main
 int main(){
+    int i;
     char* food;
     int order_count;
     char* order_array[];
@@ -51,6 +52,14 @@ int main(){
         CUSTOMERS c[i];
     }
     
-    cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
-    while(tolower(food) != 'done')
+    //get the food items for each customer and add it their order array
+    for(i=0; i<no_of_customers; i++){
+        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        i = 0;
+        while(tolower(food) != 'done'){
+            order_array[i] = tolower(food);
+            i++;
+        }
+    }
+    
 }
