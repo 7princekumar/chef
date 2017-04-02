@@ -52,12 +52,12 @@ int main(){
         CUSTOMERS c[i];
     }
     
-    //get the food items for each customer and add it their order array
-    for(i=0; i<no_of_customers; i++){
+    //get the food items for each customer and add it to their order_array
+    for(int j=0; i<no_of_customers; j++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
         i = 0;
         while(tolower(food) != 'done'){
-            order_array[i] = tolower(food);
+            c[j]order_array[i] = tolower(food);
             i++;
         }
     }
