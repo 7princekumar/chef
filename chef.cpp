@@ -2,6 +2,7 @@
 #include<iostream>
 #include<ctype>
 #include<algorithm>
+using namespace std;
 
 //classes
 class ORDER{
@@ -16,18 +17,20 @@ class ORDER{
 class CUSTOMER:public ORDER{
      int static count;
      int c_num; //customer_number
-     ORDER order;
      public:
      CUSTOMER(){
          c_num = count++;
+         order_count = 0;
      }
      CUSTOMER(int/*count of orders*/,char*[]/*array of orders*/);
 };
 
+int CUSTOMER::count; //static count
 
 //class constructors definations
-CUSTOMER::CUSTOMER(int order_count, char* order_array[order_count]){
+CUSTOMER::CUSTOMER(int o_count, char* order_array[order_count]){
     c_num = count++;
+    oder_count = o_count;
     
 }
 
@@ -38,8 +41,8 @@ CUSTOMER::CUSTOMER(int order_count, char* order_array[order_count]){
 //main
 int main(){
     int i;
-    char* food;
-    int order_count;
+    char* food ="";
+    int o_count; //order count
     char* order_array[];
     
     //get the no of customers, say 'n'
@@ -49,17 +52,28 @@ int main(){
     
     //create 'n' number of customer objects
     for(int i=0; i<no_of_customers; i++){
-        CUSTOMERS c[i];
+        
     }
     
     //get the food items for each customer and add it to their order_array
     for(int j=0; i<no_of_customers; j++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
-        i = 0;
+        o_count = 0;
         while(tolower(food) != 'done'){
-            c[j]order_array[i] = tolower(food);
-            i++;
+            cin<<food;
+            o_count++;
+            order_array[i] = tolower(food);
         }
+        c[j].order_count = o_count; 
+        c[j].food[]
     }
     
+    
+    //testing the order's list of customers by printing
+    for(int j=0; i<no_of_customers; j++){
+        cout<<"Customer ["<<j<<"] :\n";
+        for(i=0; i<c[j].order.order_count; i++){
+            cout<<c[j].
+        }
+    }
 }
