@@ -1,6 +1,7 @@
 //header files
 #include<iostream>
 #include<cctype>
+#include<string>
 #include<algorithm>
 using namespace std;
 
@@ -8,9 +9,9 @@ using namespace std;
 class ORDER{
     public:
     int order_count;
-    char* food[order_count];
-    int cost[order_count];
-    int time[order_count];
+    string food[];
+    int cost[];
+    int time[];
 };
 
 
@@ -22,15 +23,15 @@ class CUSTOMER:public ORDER{
          c_num = count++;
          order_count = 0;
      }
-     CUSTOMER(int/*count of orders*/,char*[]/*array of orders*/);
+     CUSTOMER(int/*count of orders*/,char*/*array of orders*/);
 };
 
 int CUSTOMER::count; //static count
 
 //class constructors definations
-CUSTOMER::CUSTOMER(int o_count, char* order_array[order_count]){
+CUSTOMER::CUSTOMER(int o_count, char* order_array){
     c_num = count++;
-    oder_count = o_count;
+    order_count = o_count;
     for(int i = 0; i<order_count; i++){
         food[i] = order_array[i];
     }
@@ -44,9 +45,9 @@ CUSTOMER::CUSTOMER(int o_count, char* order_array[order_count]){
 //main
 int main(){
     int i,j;
-    char* food ="";
+    string item = "";
     int o_count; //order count
-    char* order_array[];
+    string order_array[];
     
     //get the no of customers, say 'n'
     int no_of_customers;
@@ -55,16 +56,20 @@ int main(){
     
     //create 'n' number of customer objects and initialise em
     for(int i=0; i<no_of_customers; i++){
+        CUSTOMER c[i];
+    }
+    
+    for(int i=0; i<no_of_customers; i++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
         o_count = 0;
         j = 0;
-        while(tolower(food) != 'done'){
-            cin<<food;
+        while(item != "done"){
+            cin>>item;
             o_count++;
-            order_array[j] = tolower(food);
+            order_array[j] = item;
             j++;
         }
-        CUSTOMER c[i](o_count,order_array);//calling the constructor
+        CUSTOMER (c[i])(o_count,order_array);//calling the constructor
     }
     
     /*//get the food items for each customer and add it to their order_array
