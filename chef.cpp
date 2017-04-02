@@ -9,7 +9,7 @@ using namespace std;
 class ORDER{
     public:
     int order_count;
-    string food[];
+    string* food;
     int cost[];
     int time[];
 };
@@ -23,13 +23,13 @@ class CUSTOMER:public ORDER{
          c_num = count++;
          order_count = 0;
      }
-     CUSTOMER(int/*count of orders*/,char*/*array of orders*/);
+     CUSTOMER(int/*count of orders*/,string* /*array of orders*/);
 };
 
 int CUSTOMER::count; //static count
 
 //class constructors definations
-CUSTOMER::CUSTOMER(int o_count, char* order_array){
+CUSTOMER::CUSTOMER(int o_count, string* order_array){
     c_num = count++;
     order_count = o_count;
     for(int i = 0; i<order_count; i++){
@@ -47,7 +47,7 @@ int main(){
     int i,j;
     string item = "";
     int o_count; //order count
-    string order_array[];
+    string* order_array;
     
     //get the no of customers, say 'n'
     int no_of_customers;
