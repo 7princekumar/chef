@@ -1,6 +1,6 @@
 //header files
 #include<iostream>
-#include<ctype>
+#include<cctype>
 #include<algorithm>
 using namespace std;
 
@@ -31,6 +31,9 @@ int CUSTOMER::count; //static count
 CUSTOMER::CUSTOMER(int o_count, char* order_array[order_count]){
     c_num = count++;
     oder_count = o_count;
+    for(int i = 0; i<order_count; i++){
+        food[i] = order_array[i];
+    }
     
 }
 
@@ -40,7 +43,7 @@ CUSTOMER::CUSTOMER(int o_count, char* order_array[order_count]){
 
 //main
 int main(){
-    int i;
+    int i,j;
     char* food ="";
     int o_count; //order count
     char* order_array[];
@@ -50,12 +53,21 @@ int main(){
     cout<<"Number of customers: ";
     cin>>no_of_customers;
     
-    //create 'n' number of customer objects
+    //create 'n' number of customer objects and initialise em
     for(int i=0; i<no_of_customers; i++){
-        
+        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        o_count = 0;
+        j = 0;
+        while(tolower(food) != 'done'){
+            cin<<food;
+            o_count++;
+            order_array[j] = tolower(food);
+            j++;
+        }
+        CUSTOMER c[i](o_count,order_array);//calling the constructor
     }
     
-    //get the food items for each customer and add it to their order_array
+    /*//get the food items for each customer and add it to their order_array
     for(int j=0; i<no_of_customers; j++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
         o_count = 0;
@@ -67,13 +79,16 @@ int main(){
         c[j].order_count = o_count; 
         c[j].food[]
     }
+    */
     
     
     //testing the order's list of customers by printing
-    for(int j=0; i<no_of_customers; j++){
-        cout<<"Customer ["<<j<<"] :\n";
-        for(i=0; i<c[j].order.order_count; i++){
-            cout<<c[j].
+    for(i=0; i<no_of_customers; i++){
+        cout<<"Customer ["<<i<<"] :\n";
+        for(j=0; i<c[i].order_count; j++){
+            cout<<c[i].food[j]<<endl;
         }
+        cout<<endl;
     }
+    return 0;
 }
