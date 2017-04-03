@@ -70,9 +70,13 @@ int main(){
         }
         
         //put the values inside each customer data
-        (c[i]).order_count = o_count;
-        for(j=0; j<o_count; j++){
+        //1. count
+        (c[i]).order_count = o_count; 
+        //2. fill food,time,cost vector
+        for(j=0; j<o_count; j++){      
             (c[i]).food.push_back(order_array[j]);
+            (c[i]).time.push_back(menu_time(order_array[j]));
+            (c[i]).cost.push_back(menu_cost(order_array[j]));
         }
     }
     
@@ -81,8 +85,9 @@ int main(){
     //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
+        cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<c[i].order_count; j++){
-            cout<<c[i].food[j]<<endl;
+            cout<<c[i].food[j]<<"\t\t"<<c[i].time[j]<<"\t"<<c[i].cost[j]<<endl;
         }
         cout<<endl;
     }
@@ -104,7 +109,7 @@ int menu_time(string sample){
      if (sample == "samosa") return 7;
      if (sample == "coffee") return 5;
      if (sample == "noodle") return 20;
-     if (sample == "fried rice") return 25;
+     if (sample == "friedrice") return 25;
      //more to be added
 }
 
@@ -117,6 +122,6 @@ int menu_cost(string sample){
      if (sample == "samosa") return 12;
      if (sample == "coffee") return 8;
      if (sample == "noodle") return 60;
-     if (sample == "fried rice") return 30;
+     if (sample == "friedrice") return 30;
      //more to be added
 }
