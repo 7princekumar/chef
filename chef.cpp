@@ -20,24 +20,17 @@ class CUSTOMER:public ORDER{
      int static count;
      int c_num; //customer_number
      public:
+     int order_count;
      CUSTOMER(){
          c_num = count++;
          order_count = 0;
      }
-     CUSTOMER(int& /*count of orders*/,vector<string>& /*array of orders*/);
 };
 
 int CUSTOMER::count; //static count
 
 //class constructors definations
-CUSTOMER::CUSTOMER(int& o_count, vector<string>& order_array){
-    c_num = count++;
-    order_count = o_count;
-    for(int i = 0; i<order_count; i++){
-        food[i] = order_array[i];
-    }
-    
-}
+
 
 //class functions
 //normal functions
@@ -56,7 +49,7 @@ int main(){
     cin>>no_of_customers;
     
     //create 'n' number of customer objects and initialise em
-    vector<CUSTOMER> c;
+    CUSTOMER c[no_of_customers];
     
     for(int i=0; i<no_of_customers; i++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
@@ -66,22 +59,13 @@ int main(){
             o_count++;
             order_array.push_back(item);
         }
-        c[i](o_count,order_array);//calling the constructor
+        (c[i]).order_count = o_count;
+        for(j=0; j<o_count; j++){
+            (c[i]).food.push_back(order_array[j]);
+        }
+        //(c[i])(o_count, order_array);//calling the constructor
     }
     
-    /*//get the food items for each customer and add it to their order_array
-    for(int j=0; i<no_of_customers; j++){
-        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
-        o_count = 0;
-        while(tolower(food) != 'done'){
-            cin<<food;
-            o_count++;
-            order_array[i] = tolower(food);
-        }
-        c[j].order_count = o_count; 
-        c[j].food[]
-    }
-    */
     
     
     //testing the order's list of customers by printing
