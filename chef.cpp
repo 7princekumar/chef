@@ -27,13 +27,15 @@ class CUSTOMER:public ORDER{
      }
 };
 
+
+
 int CUSTOMER::count; //static count
 
-//class constructors definations
 
+//functions prototypes
+int menu_cost(string);
+int menu_time(string);
 
-//class functions
-//normal functions
 
 
 //main
@@ -71,7 +73,6 @@ int main(){
         for(j=0; j<o_count; j++){
             (c[i]).food.push_back(order_array[j]);
         }
-        //(c[i])(o_count, order_array);//calling the constructor
     }
     
     
@@ -85,4 +86,36 @@ int main(){
         cout<<endl;
     }
     return 0;
+}
+
+
+
+
+
+
+//normal functions
+int menu_time(string sample){
+    //input: one order name as string
+    //output: time taken to complete that order as integer(mins)
+     if (sample == "idli")   return 10;
+     if (sample == "dosa")   return 30;
+     if (sample == "tea")    return 5;
+     if (sample == "samosa") return 7;
+     if (sample == "coffee") return 5;
+     if (sample == "noodle") return 20;
+     if (sample == "fried rice") return 25;
+     //more to be added
+}
+
+int menu_cost(string sample){
+    //input: one order name as string
+    //output: cost of that order as integer
+     if (sample == "idli")   return 7;
+     if (sample == "dosa")   return 30;
+     if (sample == "tea")    return 8;
+     if (sample == "samosa") return 12;
+     if (sample == "coffee") return 8;
+     if (sample == "noodle") return 60;
+     if (sample == "fried rice") return 30;
+     //more to be added
 }
