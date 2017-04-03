@@ -1,6 +1,7 @@
 //header files
 #include<iostream>
 #include<cctype>
+#include<vector>
 #include<string>
 #include<algorithm>
 using namespace std;
@@ -9,9 +10,9 @@ using namespace std;
 class ORDER{
     public:
     int order_count;
-    string* food;
-    int cost[];
-    int time[];
+    vector <string> food;
+    vector <int> cost;
+    vector <int> time;
 };
 
 
@@ -23,13 +24,13 @@ class CUSTOMER:public ORDER{
          c_num = count++;
          order_count = 0;
      }
-     CUSTOMER(int/*count of orders*/,string* /*array of orders*/);
+     CUSTOMER(int& /*count of orders*/,vector<string>& /*array of orders*/);
 };
 
 int CUSTOMER::count; //static count
 
 //class constructors definations
-CUSTOMER::CUSTOMER(int o_count, string* order_array){
+CUSTOMER::CUSTOMER(int& o_count, vector<string>& order_array){
     c_num = count++;
     order_count = o_count;
     for(int i = 0; i<order_count; i++){
@@ -47,7 +48,7 @@ int main(){
     int i,j;
     string item = "";
     int o_count; //order count
-    string* order_array;
+    vector<string> order_array;
     
     //get the no of customers, say 'n'
     int no_of_customers;
@@ -55,21 +56,17 @@ int main(){
     cin>>no_of_customers;
     
     //create 'n' number of customer objects and initialise em
-    for(int i=0; i<no_of_customers; i++){
-        CUSTOMER c[i];
-    }
+    vector<CUSTOMER> c;
     
     for(int i=0; i<no_of_customers; i++){
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
         o_count = 0;
-        j = 0;
         while(item != "done"){
             cin>>item;
             o_count++;
-            order_array[j] = item;
-            j++;
+            order_array.push_back(item);
         }
-        CUSTOMER (c[i])(o_count,order_array);//calling the constructor
+        c[i](o_count,order_array);//calling the constructor
     }
     
     /*//get the food items for each customer and add it to their order_array
