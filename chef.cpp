@@ -52,7 +52,7 @@ int main(){
     
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
-    c.resize(no_of_customers);
+    c.resize(no_of_customers); //resolves the variable length array problem
     
     for(int i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
