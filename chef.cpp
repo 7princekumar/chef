@@ -4,7 +4,9 @@
 #include<vector>
 #include<string>
 #include<algorithm>
+#define NO_OF_CHEF 5
 using namespace std;
+
 
 //classes
 class ORDER{
@@ -28,6 +30,12 @@ class CUSTOMER:public ORDER{
 };
 
 
+class CHEF:public CUSTOMER{
+     public:
+     vector <int> job;
+};
+
+
 
 int CUSTOMER::count; //static count
 
@@ -35,6 +43,7 @@ int CUSTOMER::count; //static count
 //functions prototypes
 int menu_cost(string);
 int menu_time(string);
+int max_of_vector(vector<int>);
 
 
 
@@ -80,6 +89,41 @@ int main(){
         }
     }
     
+    //create instance of chefs
+    vector <CHEF> chef;
+    chef.resize(NO_OF_CHEF);
+    
+    //ALGORITHM - assignment of jobs
+    //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
+        //assign it to chef 1
+    //2.get the next max of customer1's order
+        //assign it to chef 2
+        //spare <- spare - next_max
+        //repeat till spare>0
+    //3.repeat for all customers        
+    int c_max;
+    int spare = 0;
+    vector<int>time_array;
+    for(i=0; i<no_of_customers; i++){
+        time_array = c[i].time; //as we need to mutate time_array
+        for(j=0; j<NO_OF_CHEF; j++){
+            c_max = max_of_vector(time_array);
+            spare = c_max;
+            chef[j].jobs.pushback(c_max);
+            while(spare > 0){
+                //remove the time used from time_array
+                for(int k=0; ; k++){
+                    if (c_max == time_array[k]){
+                        time_array[k] = 0; //since we can't delete this array location
+                        break;
+                    }
+                }
+                c_max = max_of_vector(time_array);
+            }
+        }
+    }
+    
+    
     
     
     //testing the order's list of customers by printing
@@ -124,4 +168,13 @@ int menu_cost(string sample){
      if (sample == "noodle") return 60;
      if (sample == "friedrice") return 30;
      //more to be added
+}
+
+int max_of_vector(vector<int> V){
+    int i;
+    int max_ = V[0];
+    for(i=1; i<V.size; i++){
+        if ( V[i] > max_ ) max_ = V[i];
+    }
+    return max_;
 }
