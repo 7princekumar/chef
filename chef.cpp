@@ -52,13 +52,21 @@ int main(){
     CUSTOMER c[no_of_customers];
     
     for(int i=0; i<no_of_customers; i++){
-        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        //reset item and order_array as we need to reuse it
+        item = "";
+        order_array.clear();
         o_count = 0;
-        while(item != "done"){
+        
+        cout<<"CUSTOMER: ["<<i<<"] ::\n";
+        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        while(1){
             cin>>item;
+            if(item == "done") break;
             o_count++;
             order_array.push_back(item);
         }
+        
+        //put the values inside each customer data
         (c[i]).order_count = o_count;
         for(j=0; j<o_count; j++){
             (c[i]).food.push_back(order_array[j]);
@@ -71,7 +79,7 @@ int main(){
     //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
-        for(j=0; i<c[i].order_count; j++){
+        for(j=0; j<c[i].order_count; j++){
             cout<<c[i].food[j]<<endl;
         }
         cout<<endl;
