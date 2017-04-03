@@ -51,7 +51,9 @@ int main(){
     cin>>no_of_customers;
     
     //create 'n' number of customer objects and initialise em
-    CUSTOMER c[no_of_customers];
+    //CUSTOMER c[no_of_customers];
+    vector<CUSTOMER> c;
+    c.resize(no_of_customers);
     
     for(int i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
