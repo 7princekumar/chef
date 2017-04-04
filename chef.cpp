@@ -109,7 +109,7 @@ int main(){
         for(j=0; j<NO_OF_CHEF; j++){
             c_max = max_of_vector(time_array);
             spare = c_max;
-            chef[j].jobs.pushback(c_max);
+            chef[j].job.pushback(c_max);
             while(spare > 0){
                 //remove the time used from time_array
                 for(int k=0; ; k++){
@@ -173,7 +173,7 @@ int menu_cost(string sample){
 int max_of_vector(vector<int> V){
     int i;
     int max_ = V[0];
-    for(i=1; i<V.size; i++){
+    for(i=1; i<V.size(); i++){
         if ( V[i] > max_ ) max_ = V[i];
     }
     return max_;
