@@ -19,6 +19,7 @@ typedef struct node NODE;
 int menu_cost(string);
 int menu_time(string);
 int max_of_vector(vector<NODE>);
+bool compare(NODE,NODE);
 
 
 //classes
@@ -125,8 +126,19 @@ int main(){
     // }
 
 
-    //testing the order's list of customers by printing
+    //NEW ALGO
+    //1. SORT THE NODE ARRAY in decreasing order
+    for(i = 0; i<no_of_customers; i++){
+        order_array = c[i].order_node;
+        sort(order_array.begin(), order_array.end(), compare);
+        for(j=0; j<order_array.size(); j++)
+            cout<<order_array[j].time <<" -> ";
+        cout<<endl;
+    }
 
+
+
+    //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
         cout<<"Name \t\tTime \tCost\n";
@@ -188,4 +200,9 @@ int max_of_vector(vector<NODE> V){
         if ( V[i].time > max_ ) max_ = V[i].time;
     }
     return max_;
+}
+
+
+bool compare(NODE a,NODE b){
+    return (a.time > b.time);
 }
