@@ -7,17 +7,19 @@
 #define NO_OF_CHEF 5
 using namespace std;
 
-//functions prototypes
-int menu_cost(string);
-int menu_time(string);
-int max_of_vector(vector<int>);
-
 struct node{
     string food;
     int cost;
     int time;
 };
 typedef struct node NODE;
+
+
+//functions prototypes
+int menu_cost(string);
+int menu_time(string);
+int max_of_vector(vector<NODE>);
+
 
 //classes
 class ORDER{
@@ -86,8 +88,8 @@ int main(){
     }
 
     //create instance of chefs
-    //////vector<CHEF> chef;
-    ///////chef.resize(NO_OF_CHEF);
+    vector<CHEF> chef;
+    chef.resize(NO_OF_CHEF);
 
     //ALGORITHM - assignment of jobs
     //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
@@ -99,22 +101,22 @@ int main(){
     //3.repeat for all customers
     // int c_max;
     // int spare = 0;
-    // vector<int>time_array;
+    // vector<NODE>customer_orders;
     // for(i=0; i<no_of_customers; i++){
-    //     time_array = c[i].time; //as we need to mutate time_array
+    //     customer_orders = c[i].order_node; //as we need to mutate customer_orders
     //     for(j=0; j<NO_OF_CHEF; j++){
-    //         c_max = max_of_vector(time_array);
+    //         c_max = max_of_vector(customer_orders);
     //         spare = c_max;
     //         do {
     //             chef[j].job.push_back(c_max);
-    //             //remove the time used from time_array
+    //             //remove the time used from customer_orders
     //             for(int k=0; ; k++){
-    //                 if (c_max == time_array[k]){
-    //                     time_array[k] = 0; //since we can't delete this array location
+    //                 if (c_max == customer_orders[k]){
+    //                     customer_orders[k] = 0; //since we can't delete this array location
     //                     break;
     //                 }
     //             }
-    //             c_max = max_of_vector(time_array); //new c_max
+    //             c_max = max_of_vector(customer_orders); //new c_max
     //             cout<<c_max<<"\t";break; //test
     //             spare -= c_max;
     //         }while(spare>0);
@@ -179,11 +181,11 @@ int menu_cost(string sample){
      //more to be added
 }
 
-int max_of_vector(vector<int> V){
+int max_of_vector(vector<NODE> V){
     int i;
-    int max_ = V[0];
+    int max_ = V[0].time;
     for(i=1; i<V.size(); i++){
-        if ( V[i] > max_ ) max_ = V[i];
+        if ( V[i].time > max_ ) max_ = V[i].time;
     }
     return max_;
 }
