@@ -7,13 +7,16 @@
 #define NO_OF_CHEF 5
 using namespace std;
 
+
 //Linked list to store the orders corresponding time
 struct node{
-  char order_name[20];
+  string order_name;
   int time_in_min;
   struct node* next;
 };
 typedef struct node NODE;
+NODE *order_start=NULL;
+
 //classes
 class ORDER{
     public:
