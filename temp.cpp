@@ -7,11 +7,6 @@
 #define NO_OF_CHEF 5
 using namespace std;
 
-struct node{
-    string food;
-    int cost;
-    int time;
-};
 
 //Linked list to store the orders corresponding time
 struct node{
@@ -26,7 +21,9 @@ NODE *order_start=NULL;
 class ORDER{
     public:
     int order_count;
-    vector<struct node> order;
+    vector <string> food;
+    vector <int> cost;
+    vector <int> time;
 };
 
 
@@ -39,6 +36,7 @@ class CUSTOMER:public ORDER{
          c_num = count++;
          order_count = 0;
      }
+     friend void insert_order(string ordername);
 };
 
 
@@ -46,6 +44,16 @@ class CHEF:public CUSTOMER{
      public:
      vector <int> job;
 };
+
+
+void insert_order(string ordername){
+  NODE* neworder;
+  neworder=(NODE *)malloc(sizeof(NODE));
+  neworder->order_name=ordername;
+  neworder->time_in_min=menu_time(ordername);
+  neworder->next=order_start;
+  order_start=neworder;
+}
 
 
 
@@ -88,6 +96,7 @@ int main(){
             if(item == "done") break;
             o_count++;
             order_array.push_back(item);
+
         }
 
         //put the values inside each customer data
@@ -98,6 +107,7 @@ int main(){
             (c[i]).food.push_back(order_array[j]);
             (c[i]).time.push_back(menu_time(order_array[j]));
             (c[i]).cost.push_back(menu_cost(order_array[j]));
+            (c[i]).insert_order(order_array[j]);
         }
     }
 
