@@ -8,6 +8,12 @@
 using namespace std;
 
 
+//functions prototypes
+int menu_cost(string);
+int menu_time(string);
+int max_of_vector(vector<int>);
+
+
 //Linked list to store the orders corresponding time
 struct node{
   string order_name;
@@ -16,6 +22,7 @@ struct node{
 };
 typedef struct node NODE;
 NODE *order_start=NULL;
+
 
 //classes
 class ORDER{
@@ -36,7 +43,7 @@ class CUSTOMER:public ORDER{
          c_num = count++;
          order_count = 0;
      }
-     friend void insert_order(string ordername);
+     void insert_order(string ordername);
 };
 
 
@@ -46,25 +53,16 @@ class CHEF:public CUSTOMER{
 };
 
 
-void insert_order(string ordername){
-  NODE* neworder;
-  neworder=(NODE *)malloc(sizeof(NODE));
-  neworder->order_name=ordername;
-  neworder->time_in_min=menu_time(ordername);
-  neworder->next=order_start;
-  order_start=neworder;
-}
-
-
-
 int CUSTOMER::count; //static count
 
-
-//functions prototypes
-int menu_cost(string);
-int menu_time(string);
-int max_of_vector(vector<int>);
-
+void CUSTOMER::insert_order(string ordername){
+    NODE* neworder;
+    neworder=(NODE *)malloc(sizeof(NODE));
+    neworder->order_name  = ordername;
+    neworder->time_in_min = menu_time(ordername);
+    neworder->next        = order_start;
+    order_start           = neworder;
+}
 
 
 //main
@@ -96,7 +94,7 @@ int main(){
             if(item == "done") break;
             o_count++;
             order_array.push_back(item);
-
+            
         }
 
         //put the values inside each customer data
@@ -107,7 +105,8 @@ int main(){
             (c[i]).food.push_back(order_array[j]);
             (c[i]).time.push_back(menu_time(order_array[j]));
             (c[i]).cost.push_back(menu_cost(order_array[j]));
-            (c[i]).insert_order(order_array[j]);
+            
+            //(c[i]).insert_order(order_array[j]);
         }
     }
 
@@ -214,3 +213,4 @@ int max_of_vector(vector<int> V){
     }
     return max_;
 }
+
