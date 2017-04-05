@@ -109,8 +109,8 @@ int main(){
         for(j=0; j<NO_OF_CHEF; j++){
             c_max = max_of_vector(time_array);
             spare = c_max;
-            chef[j].job.push_back(c_max);
-            while(spare > 0){
+            do {
+                chef[j].job.push_back(c_max);
                 //remove the time used from time_array
                 for(int k=0; ; k++){
                     if (c_max == time_array[k]){
@@ -118,11 +118,12 @@ int main(){
                         break;
                     }
                 }
+                c_max = max_of_vector(time_array); //new c_max
+                cout<<c_max<<"\t";break; //test
                 spare -= c_max;
-                c_max = max_of_vector(time_array);
-
-            }
+            }while(spare>0);
         }
+        cout<<endl;
     }
 
 
@@ -136,6 +137,17 @@ int main(){
         }
         cout<<endl;
     }
+    
+    //testing the job list of chef by printing
+    for(i=0; i<NO_OF_CHEF; i++){
+        cout<<"CHEF ["<<i<<"] :  ";
+        //cout<<"Name \t\tTime \tCost\n";
+        for(j=0; j<chef[i].job.size(); j++){
+            cout<<chef[i].job[j]<<" -> ";
+        }
+        cout<<endl;
+    }
+
 
     return 0;
 }
