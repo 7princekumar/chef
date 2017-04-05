@@ -7,26 +7,22 @@
 #define NO_OF_CHEF 5
 using namespace std;
 
+//functions prototypes
+int menu_cost(string);
+int menu_time(string);
+int max_of_vector(vector<int>);
+
 struct node{
     string food;
     int cost;
     int time;
 };
-
-//Linked list to store the orders corresponding time
-struct node{
-  string order_name;
-  int time_in_min;
-  struct node* next;
-};
 typedef struct node NODE;
-NODE *order_start=NULL;
 
 //classes
 class ORDER{
     public:
-    int order_count;
-    vector<struct node> order;
+    vector<NODE>order_node;
 };
 
 
@@ -37,14 +33,13 @@ class CUSTOMER:public ORDER{
      int order_count;
      CUSTOMER(){
          c_num = count++;
-         order_count = 0;
      }
 };
 
 
 class CHEF:public CUSTOMER{
      public:
-     vector <int> job;
+     vector <NODE> job;
 };
 
 
@@ -52,19 +47,13 @@ class CHEF:public CUSTOMER{
 int CUSTOMER::count; //static count
 
 
-//functions prototypes
-int menu_cost(string);
-int menu_time(string);
-int max_of_vector(vector<int>);
-
-
 
 //main
 int main(){
     int i,j;
-    string item = "";
-    int o_count; //order count
-    vector<string> order_array;
+    string name;
+    NODE item;
+    vector<NODE> order_array;
 
     //get the no of customers, say 'n'
     int no_of_customers;
@@ -74,36 +63,31 @@ int main(){
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
     c.resize(no_of_customers); //resolves the variable length array problem
-
-    for(int i=0; i<no_of_customers; i++){
+    
+    for(i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
-        item = "";
+        name = "";
         order_array.clear();
-        o_count = 0;
 
         cout<<"CUSTOMER: ["<<i<<"] ::\n";
-        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        cout<<"Enter the names of the food items and enter 'done' if no more\n";
         while(1){
-            cin>>item;
-            if(item == "done") break;
-            o_count++;
-            order_array.push_back(item);
+            cin>>name;
+            if(name == "done") break;
+            item.food = name;
+            item.cost = menu_cost(name);
+            item.time = menu_time(name);
+            
+            order_array.push_back(item); /////
         }
 
         //put the values inside each customer data
-        //1. count
-        (c[i]).order_count = o_count;
-        //2. fill food,time,cost vector
-        for(j=0; j<o_count; j++){
-            (c[i]).food.push_back(order_array[j]);
-            (c[i]).time.push_back(menu_time(order_array[j]));
-            (c[i]).cost.push_back(menu_cost(order_array[j]));
-        }
+        c[i].order_node = order_array;
     }
 
     //create instance of chefs
-    vector <CHEF> chef;
-    chef.resize(NO_OF_CHEF);
+    //////vector<CHEF> chef;
+    ///////chef.resize(NO_OF_CHEF);
 
     //ALGORITHM - assignment of jobs
     //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
@@ -113,30 +97,30 @@ int main(){
         //spare <- spare - next_max
         //repeat till spare>0
     //3.repeat for all customers
-    int c_max;
-    int spare = 0;
-    vector<int>time_array;
-    for(i=0; i<no_of_customers; i++){
-        time_array = c[i].time; //as we need to mutate time_array
-        for(j=0; j<NO_OF_CHEF; j++){
-            c_max = max_of_vector(time_array);
-            spare = c_max;
-            do {
-                chef[j].job.push_back(c_max);
-                //remove the time used from time_array
-                for(int k=0; ; k++){
-                    if (c_max == time_array[k]){
-                        time_array[k] = 0; //since we can't delete this array location
-                        break;
-                    }
-                }
-                c_max = max_of_vector(time_array); //new c_max
-                cout<<c_max<<"\t";break; //test
-                spare -= c_max;
-            }while(spare>0);
-        }
-        cout<<endl;
-    }
+    // int c_max;
+    // int spare = 0;
+    // vector<int>time_array;
+    // for(i=0; i<no_of_customers; i++){
+    //     time_array = c[i].time; //as we need to mutate time_array
+    //     for(j=0; j<NO_OF_CHEF; j++){
+    //         c_max = max_of_vector(time_array);
+    //         spare = c_max;
+    //         do {
+    //             chef[j].job.push_back(c_max);
+    //             //remove the time used from time_array
+    //             for(int k=0; ; k++){
+    //                 if (c_max == time_array[k]){
+    //                     time_array[k] = 0; //since we can't delete this array location
+    //                     break;
+    //                 }
+    //             }
+    //             c_max = max_of_vector(time_array); //new c_max
+    //             cout<<c_max<<"\t";break; //test
+    //             spare -= c_max;
+    //         }while(spare>0);
+    //     }
+    //     cout<<endl;
+    // }
 
 
     //testing the order's list of customers by printing
@@ -144,22 +128,21 @@ int main(){
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
         cout<<"Name \t\tTime \tCost\n";
-        for(j=0; j<c[i].order_count; j++){
-            cout<<c[i].food[j]<<"\t\t"<<c[i].time[j]<<"\t"<<c[i].cost[j]<<endl;
+        for(j=0; j<c[i].order_node.size(); j++){
+            cout<<c[i].order_node[j].food<<"\t\t"<<c[i].order_node[j].time<<"\t"<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
     }
 
-    //testing the job list of chef by printing
-    for(i=0; i<NO_OF_CHEF; i++){
-        cout<<"CHEF ["<<i<<"] :  ";
-        //cout<<"Name \t\tTime \tCost\n";
-        for(j=0; j<chef[i].job.size(); j++){
-            cout<<chef[i].job[j]<<" -> ";
-        }
-        cout<<endl;
-    }
-
+    // //testing the job list of chef by printing
+    // for(i=0; i<NO_OF_CHEF; i++){
+    //     cout<<"CHEF ["<<i<<"] :  ";
+    //     //cout<<"Name \t\tTime \tCost\n";
+    //     for(j=0; j<chef[i].job.size(); j++){
+    //         cout<<chef[i].job[j]<<" -> ";
+    //     }
+    //     cout<<endl;
+    // }
 
     return 0;
 }
