@@ -9,6 +9,9 @@ while(1){
 
 void insert order(char *ordername){
   NODE* neworder;
+  neworder=(NODE *)malloc(sizeof(NODE));
   neworder->order_name=ordername;
-  neworder->time_in_min=
+  neworder->time_in_min=menu_time(ordername);
+  neworder->next=start;
+  start=neworder;
 }
