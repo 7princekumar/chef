@@ -1,5 +1,6 @@
 //header files
 #include<iostream>
+#include<cstdlib>
 #include<cctype>
 #include<vector>
 #include<string>
@@ -21,7 +22,7 @@ struct node{
   struct node* next;
 };
 typedef struct node NODE;
-NODE *order_start=NULL;
+NODE *start = NULL;
 
 
 //classes
@@ -55,14 +56,29 @@ class CHEF:public CUSTOMER{
 
 int CUSTOMER::count; //static count
 
+//member function of classes
 void CUSTOMER::insert_order(string ordername){
-    NODE* neworder;
-    neworder=(NODE *)malloc(sizeof(NODE));
-    neworder->order_name  = ordername;
-    neworder->time_in_min = menu_time(ordername);
-    neworder->next        = order_start;
-    order_start           = neworder;
+    //create node
+    NODE *temp, *p;
+    p = start;
+    //initialize node
+    temp=(NODE *)malloc(sizeof(NODE));
+    //fill node
+    temp->order_name  = ordername;
+    temp->time_in_min = menu_time(ordername);
+    //point to next
+    if (start == NULL)
+        start = temp;
+    else{
+        while(p->next != NULL)
+        p = p->next;
+        p->next = temp;
+    }
+    free(temp);
 }
+
+
+
 
 
 //main
@@ -72,15 +88,16 @@ int main(){
     int o_count; //order count
     vector<string> order_array;
 
+
     //get the no of customers, say 'n'
     int no_of_customers;
     cout<<"Number of customers: ";
     cin>>no_of_customers;
 
+
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
     c.resize(no_of_customers); //resolves the variable length array problem
-
     for(int i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
         item = "";
@@ -106,7 +123,7 @@ int main(){
             (c[i]).time.push_back(menu_time(order_array[j]));
             (c[i]).cost.push_back(menu_cost(order_array[j]));
             
-            //(c[i]).insert_order(order_array[j]);
+            (c[i]).insert_order(order_array[j]);
         }
     }
 
@@ -172,6 +189,7 @@ int main(){
 
     return 0;
 }
+
 
 
 
