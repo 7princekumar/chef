@@ -7,14 +7,17 @@
 #define NO_OF_CHEF 5
 using namespace std;
 
+struct node{
+    string food;
+    int cost;
+    int time;
+};
 
 //classes
 class ORDER{
     public:
     int order_count;
-    vector <string> food;
-    vector <int> cost;
-    vector <int> time;
+    vector<struct node> order;
 };
 
 
