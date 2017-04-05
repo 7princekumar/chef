@@ -53,22 +53,22 @@ int main(){
     string item = "";
     int o_count; //order count
     vector<string> order_array;
-    
+
     //get the no of customers, say 'n'
     int no_of_customers;
     cout<<"Number of customers: ";
     cin>>no_of_customers;
-    
+
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
     c.resize(no_of_customers); //resolves the variable length array problem
-    
+
     for(int i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
         item = "";
         order_array.clear();
         o_count = 0;
-        
+
         cout<<"CUSTOMER: ["<<i<<"] ::\n";
         cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
         while(1){
@@ -77,22 +77,22 @@ int main(){
             o_count++;
             order_array.push_back(item);
         }
-        
+
         //put the values inside each customer data
         //1. count
-        (c[i]).order_count = o_count; 
+        (c[i]).order_count = o_count;
         //2. fill food,time,cost vector
-        for(j=0; j<o_count; j++){      
+        for(j=0; j<o_count; j++){
             (c[i]).food.push_back(order_array[j]);
             (c[i]).time.push_back(menu_time(order_array[j]));
             (c[i]).cost.push_back(menu_cost(order_array[j]));
         }
     }
-    
+
     //create instance of chefs
     vector <CHEF> chef;
     chef.resize(NO_OF_CHEF);
-    
+
     //ALGORITHM - assignment of jobs
     //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
         //assign it to chef 1
@@ -100,7 +100,7 @@ int main(){
         //assign it to chef 2
         //spare <- spare - next_max
         //repeat till spare>0
-    //3.repeat for all customers        
+    //3.repeat for all customers
     int c_max;
     int spare = 0;
     vector<int>time_array;
@@ -118,16 +118,16 @@ int main(){
                         break;
                     }
                 }
-                c_max = max_of_vector(time_array);
                 spare -= c_max;
+                c_max = max_of_vector(time_array);
+
             }
         }
     }
-    
-    
-    
-    
+
+
     //testing the order's list of customers by printing
+
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
         cout<<"Name \t\tTime \tCost\n";
@@ -136,6 +136,7 @@ int main(){
         }
         cout<<endl;
     }
+
     return 0;
 }
 
