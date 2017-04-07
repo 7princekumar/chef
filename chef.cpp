@@ -134,30 +134,33 @@ int main(){
             cout<<c[i].order_node[j].time <<" -> ";
         cout<<endl;
     }
+    
+    
     //2. Push it to chef accordingly
     int k = 0; //for chefs
     int spare = 0;
     for(i=0; i<no_of_customers; i++){
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
-         
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare = order_array[0].time; //since sorted in decreasing order
-             
+             cout<<"CORRECT TILL THIS POINT\n";
              if(chef[k].job.size() == 0) //assign the first order of new customer to an empty chef
                 chef[k].job.push_back(order_array[j]);
              else
                 chef[++k].job.push_back(order_array[j]);
-                
+             cout<<"TEST3"; 
              while(spare>0){
                  j++;
                  if(j>order_array.size()) break;
                  chef[k].job.push_back(order_array[j]);
                  spare -= order_array[j].time;
+                 cout<<"TEST4";
              }
+             cout<<"TEST5";
          }
     }
 
-
+    cout<<"TEST 8";
 
     //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
@@ -171,9 +174,11 @@ int main(){
 
     //testing the job list of chef by printing
     for(i=0; i<chef.size(); i++){
+        cout<<"TEST6";
         cout<<"CHEF ["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
+            cout<<"TEST7";
             cout<<chef[i].job[j].time<<" -> ";
         }
         cout<<endl;
