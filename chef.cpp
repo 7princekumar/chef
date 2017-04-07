@@ -139,6 +139,7 @@ int main(){
     int spare = 0;
     for(i=0; i<no_of_customers; i++){
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
+         
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare = order_array[0].time; //since sorted in decreasing order
              
@@ -148,7 +149,10 @@ int main(){
                 chef[++k].job.push_back(order_array[j]);
                 
              while(spare>0){
-                 chef[k].job.push_back(order_array[++j]);
+                 j++;
+                 if(j>order_array.size()) break;
+                 chef[k].job.push_back(order_array[j]);
+                 spare -= order_array[j].time;
              }
          }
     }
