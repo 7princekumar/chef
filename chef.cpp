@@ -90,7 +90,7 @@ int main(){
 
     //create instance of chefs
     vector<CHEF> chef;
-    chef.resize(NO_OF_CHEF);
+    //chef.resize(NO_OF_CHEF); ////////FIX IT IN FUTURE, let there be n chef for now
 
     //ALGORITHM - assignment of jobs
     //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
@@ -129,28 +129,28 @@ int main(){
     //NEW ALGO
     //1. SORT THE NODE ARRAY in decreasing order
     for(i = 0; i<no_of_customers; i++){
-        sort(order_node.begin(), order_node.end(), compare);  //order_node is now sorted
-        for(j=0; j<order_node.size(); j++)
-            cout<<order_node[j].time <<" -> ";
+        sort(c[i].order_node.begin(), c[i].order_node.end(), compare);  //order_node is now sorted
+        for(j=0; j<c[i].order_node.size(); j++)
+            cout<<c[i].order_node[j].time <<" -> ";
         cout<<endl;
     }
     //2. Push it to chef accordingly
     int k = 0; //for chefs
+    int spare = 0;
     for(i=0; i<no_of_customers; i++){
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
-         for(j=0; j<order_array; j++){ //iterate over this array and assign its order to chefs accordingly
-             spare = order_array[0]; //since sorted in decreasing order
+         for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
+             spare = order_array[0].time; //since sorted in decreasing order
              
-             if(chef[k].size() == 0) //assign the first order of new customer to an empty chef
-                chef[k] = order_array[0];
+             if(chef[k].job.size() == 0) //assign the first order of new customer to an empty chef
+                chef[k].job.push_back(order_array[j]);
              else
-                chef[++k] = order_array[0];
+                chef[++k].job.push_back(order_array[j]);
                 
              while(spare>0){
-                 
+                 chef[k].job.push_back(order_array[++j]);
              }
          }
-         chef[i] = order_array[i];
     }
 
 
@@ -165,15 +165,15 @@ int main(){
         cout<<endl;
     }
 
-    // //testing the job list of chef by printing
-    // for(i=0; i<NO_OF_CHEF; i++){
-    //     cout<<"CHEF ["<<i<<"] :  ";
-    //     //cout<<"Name \t\tTime \tCost\n";
-    //     for(j=0; j<chef[i].job.size(); j++){
-    //         cout<<chef[i].job[j]<<" -> ";
-    //     }
-    //     cout<<endl;
-    // }
+    //testing the job list of chef by printing
+    for(i=0; i<chef.size(); i++){
+        cout<<"CHEF ["<<i<<"] :  ";
+        //cout<<"Name \t\tTime \tCost\n";
+        for(j=0; j<chef[i].job.size(); j++){
+            cout<<chef[i].job[j].time<<" -> ";
+        }
+        cout<<endl;
+    }
 
     return 0;
 }
