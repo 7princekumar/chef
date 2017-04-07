@@ -129,11 +129,28 @@ int main(){
     //NEW ALGO
     //1. SORT THE NODE ARRAY in decreasing order
     for(i = 0; i<no_of_customers; i++){
-        order_array = c[i].order_node;
-        sort(order_array.begin(), order_array.end(), compare);
-        for(j=0; j<order_array.size(); j++)
-            cout<<order_array[j].time <<" -> ";
+        sort(order_node.begin(), order_node.end(), compare);  //order_node is now sorted
+        for(j=0; j<order_node.size(); j++)
+            cout<<order_node[j].time <<" -> ";
         cout<<endl;
+    }
+    //2. Push it to chef accordingly
+    int k = 0; //for chefs
+    for(i=0; i<no_of_customers; i++){
+         order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
+         for(j=0; j<order_array; j++){ //iterate over this array and assign its order to chefs accordingly
+             spare = order_array[0]; //since sorted in decreasing order
+             
+             if(chef[k].size() == 0) //assign the first order of new customer to an empty chef
+                chef[k] = order_array[0];
+             else
+                chef[++k] = order_array[0];
+                
+             while(spare>0){
+                 
+             }
+         }
+         chef[i] = order_array[i];
     }
 
 
