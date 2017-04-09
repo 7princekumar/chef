@@ -36,7 +36,7 @@ class CUSTOMER:public ORDER{
      int c_num; //customer_number
      public:
      int order_count;
-     int returncount(){
+     static int get_customer_num(){
        return count;
      }
      CUSTOMER(){
@@ -150,13 +150,14 @@ int main(){
 
     //testing the job list of chef by printing
     for(i=0; i<chef.size(); i++){
-        cout<<"CHEF ["<<i<<"] :  "<<c[i].returncount()<<":";
+        cout<<"CHEF ["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
-            cout<<chef[i].job[j].food<<" -> ";
+            cout<<chef[i].job[j].time<<" -> ";
         }
         cout<<endl;
     }
+
 
     return 0;
 }
