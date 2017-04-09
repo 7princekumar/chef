@@ -43,6 +43,7 @@ class CUSTOMER:public ORDER{
 class CHEF:public CUSTOMER{
      public:
      vector<NODE>job;
+     int work_time;
 };
 
 
@@ -92,6 +93,8 @@ int main(){
     //create instance of chefs
     vector<CHEF> chef;
     chef.resize(NO_OF_CHEF); ////////FIX IT IN FUTURE, let there be any chef for now
+    for(i =0; i<NO_OF_CHEF; i++) //set work_time of all chef to zero initially
+        chef[i].work_time = 0;
 
     //NEW ALGO
     //1. SORT THE NODE ARRAY in decreasing order
@@ -117,16 +120,19 @@ int main(){
                 if(k+1 >= NO_OF_CHEF) break;
                 if(j+1 >= order_array.size()) break;
                 chef[k++].job.push_back(order_array[j++]); //k++ since after insertion, go to next chef
+                chef[k].work_time += order_array[j].time; //push how much time does a chef is working
              }
              else{
                  if(k+1 >= NO_OF_CHEF) break;
                  if(j+1 >= order_array.size()) break;
                  chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
+                 chef[k].work_time += order_array[j].time;
              }
              
              while(spare>0){
                  spare -= order_array[j].time;
-                 chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
+                 chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to nextorder of customer[i]
+                 chef[k].work_time += order_array[j].time;
                  if(j+1 > order_array.size()) break;
              }
          }
