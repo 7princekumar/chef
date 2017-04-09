@@ -150,7 +150,7 @@ int main(){
         cout<<"CHEF ["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
-            cout<<chef[i].job[j].time<<" -> ";
+            cout<<chef[i].job[j].food<<" -> ";
         }
         cout<<endl;
     }
