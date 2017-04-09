@@ -144,17 +144,16 @@ int main(){
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare = order_array[0].time; //since sorted in decreasing order
              
-             cout<<order_array[j].food<<"->";
+             cout<<order_array[j].food<<"->"; //check statement, remove once works fine
              
-            //  if( chef[k].job.empty() ){
-            //     //assign the first order of new customer to an empty chef
-            //     cout<<"K: "<<k<<endl;
-            //     chef[k].job.push_back(order_array[j]); 
-            //     cout<<"TEST+";
-            //  }
-            //  else
-            //     chef[++k].job.push_back(order_array[j]);
-            //  cout<<"TEST3";
+             if( chef[k].job.empty() ){
+                //assign the first order of new customer to an empty chef
+                cout<<"K: "<<k<<endl;
+                chef[k].job.push_back(order_array[j]); 
+                cout<<"TEST+";
+             }
+             else
+                chef[++k].job.push_back(order_array[j]);
              
             //  while(spare>0){
             //      j++;
