@@ -1,37 +1,33 @@
 //header files
 #include<iostream>
-#include<cstdlib>
 #include<cctype>
 #include<vector>
 #include<string>
+#include<cstdlib>
+#include<iomanip>
 #include<algorithm>
 #define NO_OF_CHEF 5
 using namespace std;
+
+struct node{
+    string food;
+    int cost;
+    int time;
+};
+typedef struct node NODE;
 
 
 //functions prototypes
 int menu_cost(string);
 int menu_time(string);
-int max_of_vector(vector<int>);
-
-
-//Linked list to store the orders corresponding time
-struct node{
-  string order_name;
-  int time_in_min;
-  struct node* next;
-};
-typedef struct node NODE;
-NODE *start = NULL;
+int max_of_vector(vector<NODE>);
+bool compare(NODE,NODE);
 
 
 //classes
 class ORDER{
     public:
-    int order_count;
-    vector <string> food;
-    vector <int> cost;
-    vector <int> time;
+    vector<NODE>order_node;
 };
 
 
@@ -42,154 +38,125 @@ class CUSTOMER:public ORDER{
      int order_count;
      CUSTOMER(){
          c_num = count++;
-         order_count = 0;
      }
-     void insert_order(string ordername);
 };
 
 
 class CHEF:public CUSTOMER{
      public:
-     vector <int> job;
+     vector<NODE>job;
 };
 
 
+
 int CUSTOMER::count; //static count
-
-//member function of classes
-void CUSTOMER::insert_order(string ordername){
-    //create node
-    NODE *temp, *p;
-    p = start;
-    //initialize node
-    temp=(NODE *)malloc(sizeof(NODE));
-    //fill node
-    temp->order_name  = ordername;
-    temp->time_in_min = menu_time(ordername);
-    //point to next
-    if (start == NULL)
-        start = temp;
-    else{
-        while(p->next != NULL)
-        p = p->next;
-        p->next = temp;
-    }
-    free(temp);
-}
-
-
 
 
 
 //main
 int main(){
     int i,j;
-    string item = "";
-    int o_count; //order count
-    vector<string> order_array;
-
+    string name;
+    NODE item;
+    vector<NODE> order_array;
 
     //get the no of customers, say 'n'
     int no_of_customers;
     cout<<"Number of customers: ";
     cin>>no_of_customers;
 
-
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
     c.resize(no_of_customers); //resolves the variable length array problem
-    for(int i=0; i<no_of_customers; i++){
+
+    for(i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
-        item = "";
+        name = "";
         order_array.clear();
-        o_count = 0;
 
         cout<<"CUSTOMER: ["<<i<<"] ::\n";
-        cout<<"Enter the names of the food items and enter 'DONE' if no more\n";
+        cout<<"Enter the names of the food items and enter 'done' if no more\n";
         while(1){
-            cin>>item;
-            if(item == "done") break;
-            o_count++;
-            order_array.push_back(item);
-            
+            cin>>name;
+            if(name == "done") break;
+            item.food = name;
+            item.cost = menu_cost(name);
+            item.time = menu_time(name);
+
+            order_array.push_back(item); /////
         }
 
         //put the values inside each customer data
-        //1. count
-        (c[i]).order_count = o_count;
-        //2. fill food,time,cost vector
-        for(j=0; j<o_count; j++){
-            (c[i]).food.push_back(order_array[j]);
-            (c[i]).time.push_back(menu_time(order_array[j]));
-            (c[i]).cost.push_back(menu_cost(order_array[j]));
-            
-            (c[i]).insert_order(order_array[j]);
-        }
+        c[i].order_node = order_array;
     }
 
-    //create instance of chefs
-    vector <CHEF> chef;
-    chef.resize(NO_OF_CHEF);
 
-    //ALGORITHM - assignment of jobs
-    //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
-        //assign it to chef 1
-    //2.get the next max of customer1's order
-        //assign it to chef 2
-        //spare <- spare - next_max
-        //repeat till spare>0
-    //3.repeat for all customers
-    int c_max;
-    int spare = 0;
-    vector<int>time_array;
-    for(i=0; i<no_of_customers; i++){
-        time_array = c[i].time; //as we need to mutate time_array
-        for(j=0; j<NO_OF_CHEF; j++){
-            c_max = max_of_vector(time_array);
-            spare = c_max;
-            do {
-                chef[j].job.push_back(c_max);
-                //remove the time used from time_array
-                for(int k=0; ; k++){
-                    if (c_max == time_array[k]){
-                        time_array[k] = 0; //since we can't delete this array location
-                        break;
-                    }
-                }
-                c_max = max_of_vector(time_array); //new c_max
-                cout<<c_max<<"\t";break; //test
-                spare -= c_max;
-            }while(spare>0);
-        }
+    //create instance of chefs
+    vector<CHEF> chef;
+    chef.resize(NO_OF_CHEF); ////////FIX IT IN FUTURE, let there be any chef for now
+
+    //NEW ALGO
+    //1. SORT THE NODE ARRAY in decreasing order
+    for(i = 0; i<no_of_customers; i++){
+        sort(c[i].order_node.begin(), c[i].order_node.end(), compare);  //order_node is now sorted
+        for(j=0; j<c[i].order_node.size(); j++)
+            cout<<c[i].order_node[j].time <<" -> ";
         cout<<endl;
     }
 
 
-    //testing the order's list of customers by printing
+    //2. Push it to chef accordingly
+    int k = -1; //for chefs
+    int spare = 0;
+    for(i=0; i<no_of_customers; i++){
+         k++;
+         order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
+         for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
+             spare = order_array[0].time; //since sorted in decreasing order
 
+             if(chef[k].job.empty()){
+                //assign the first order of new customer to an empty chef
+                if(k+1 >= NO_OF_CHEF) break;
+                if(j+1 >= order_array.size()) break;
+                chef[k++].job.push_back(order_array[j++]); //k++ since after insertion, go to next chef
+             }
+             else{
+                 if(k+1 >= NO_OF_CHEF) break;
+                 if(j+1 >= order_array.size()) break;
+                 chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
+             }
+
+             while(spare>0){
+                 spare -= order_array[j].time;
+                 chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
+                 if(j+1 > order_array.size()) break;
+             }
+         }
+    }
+
+
+    //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
-        cout<<"Name \t\tTime \tCost\n";
-        for(j=0; j<c[i].order_count; j++){
-            cout<<c[i].food[j]<<"\t\t"<<c[i].time[j]<<"\t"<<c[i].cost[j]<<endl;
+        cout<<"Name "<<setw(10)<<"Time \tCost\n";
+        for(j=0; j<c[i].order_node.size(); j++){
+            cout<<c[i].order_node[j].food<<setw(10)<<c[i].order_node[j].time<<setw(10)<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
     }
 
     //testing the job list of chef by printing
-    for(i=0; i<NO_OF_CHEF; i++){
+    for(i=0; i<chef.size(); i++){
         cout<<"CHEF ["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
-            cout<<chef[i].job[j]<<" -> ";
+            cout<<chef[i].job[j].time<<" -> ";
         }
         cout<<endl;
     }
 
-
     return 0;
 }
-
 
 
 
@@ -223,12 +190,16 @@ int menu_cost(string sample){
      //more to be added
 }
 
-int max_of_vector(vector<int> V){
+int max_of_vector(vector<NODE> V){
     int i;
-    int max_ = V[0];
+    int max_ = V[0].time;
     for(i=1; i<V.size(); i++){
-        if ( V[i] > max_ ) max_ = V[i];
+        if ( V[i].time > max_ ) max_ = V[i].time;
     }
     return max_;
 }
 
+
+bool compare(NODE a,NODE b){
+    return (a.time > b.time);
+}

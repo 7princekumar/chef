@@ -3,6 +3,8 @@
 #include<cctype>
 #include<vector>
 #include<string>
+#include<cstdlib>
+#include<iomanip>
 #include<algorithm>
 #define NO_OF_CHEF 5
 using namespace std;
@@ -66,7 +68,7 @@ int main(){
     //create 'n' number of customer objects and initialise em
     vector<CUSTOMER> c;
     c.resize(no_of_customers); //resolves the variable length array problem
-    
+
     for(i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
         name = "";
@@ -80,7 +82,7 @@ int main(){
             item.food = name;
             item.cost = menu_cost(name);
             item.time = menu_time(name);
-            
+
             order_array.push_back(item); /////
         }
 
@@ -88,7 +90,7 @@ int main(){
         c[i].order_node = order_array;
     }
 
-    
+
     //create instance of chefs
     vector<CHEF> chef;
     chef.resize(NO_OF_CHEF); ////////FIX IT IN FUTURE, let there be any chef for now
@@ -101,17 +103,17 @@ int main(){
             cout<<c[i].order_node[j].time <<" -> ";
         cout<<endl;
     }
-    
-    
+
+
     //2. Push it to chef accordingly
     int k = -1; //for chefs
     int spare = 0;
     for(i=0; i<no_of_customers; i++){
-         k++; 
+         k++;
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare = order_array[0].time; //since sorted in decreasing order
-             
+
              if(chef[k].job.empty()){
                 //assign the first order of new customer to an empty chef
                 if(k+1 >= NO_OF_CHEF) break;
@@ -123,7 +125,7 @@ int main(){
                  if(j+1 >= order_array.size()) break;
                  chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
              }
-             
+
              while(spare>0){
                  spare -= order_array[j].time;
                  chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
@@ -136,9 +138,9 @@ int main(){
     //testing the order's list of customers by printing
     for(i=0; i<no_of_customers; i++){
         cout<<"Customer ["<<i<<"] :\n";
-        cout<<"Name \t\tTime \tCost\n";
+        cout<<setw(20)<<"Name "<<setw(20)<<"  Time"<<setw(20)<<"Cost\n";
         for(j=0; j<c[i].order_node.size(); j++){
-            cout<<c[i].order_node[j].food<<"\t\t"<<c[i].order_node[j].time<<"\t"<<c[i].order_node[j].cost<<endl;
+            cout<<setw(20)<<c[i].order_node[j].food<<setw(20)<<c[i].order_node[j].time<<setw(20)<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
     }
