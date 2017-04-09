@@ -88,39 +88,6 @@ int main(){
         c[i].order_node = order_array;
     }
 
-
-    //ALGORITHM - assignment of jobs
-    //1.fetch max of customer1's order and store it in 'c_max' and 'spare'
-        //assign it to chef 1
-    //2.get the next max of customer1's order
-        //assign it to chef 2
-        //spare <- spare - next_max
-        //repeat till spare>0
-    //3.repeat for all customers
-    // int c_max;
-    // int spare = 0;
-    // vector<NODE>customer_orders;
-    // for(i=0; i<no_of_customers; i++){
-    //     customer_orders = c[i].order_node; //as we need to mutate customer_orders
-    //     for(j=0; j<NO_OF_CHEF; j++){
-    //         c_max = max_of_vector(customer_orders);
-    //         spare = c_max;
-    //         do {
-    //             chef[j].job.push_back(c_max);
-    //             //remove the time used from customer_orders
-    //             for(int k=0; ; k++){
-    //                 if (c_max == customer_orders[k]){
-    //                     customer_orders[k] = 0; //since we can't delete this array location
-    //                     break;
-    //                 }
-    //             }
-    //             c_max = max_of_vector(customer_orders); //new c_max
-    //             cout<<c_max<<"\t";break; //test
-    //             spare -= c_max;
-    //         }while(spare>0);
-    //     }
-    //     cout<<endl;
-    // }
     
     //create instance of chefs
     vector<CHEF> chef;
@@ -137,9 +104,10 @@ int main(){
     
     
     //2. Push it to chef accordingly
-    int k = 0; //for chefs
+    int k = -1; //for chefs
     int spare = 0;
     for(i=0; i<no_of_customers; i++){
+         k++; 
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare = order_array[0].time; //since sorted in decreasing order
