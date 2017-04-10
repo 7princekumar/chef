@@ -157,25 +157,22 @@ int main(){
              spare = spare_max;
              
              //for first order
-             if(j+1 >= order_array.size()) break;
              chef_with_min_work_time(chef,order_array[j]).job.push_back(order_array[j]);
              j++;
              
              //for other orders
-             while(spare>=0 && j<= (order_array.size()) ){
+             while(spare>=0 || j<= (order_array.size())){
                  if(j+1 > order_array.size()) break;
+                 cout<<"J ------------------"<<j<<endl; //REMOVE
                  chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.push_back(order_array[j]);
+                 cout<<"J ::::::::::::::::: "<<j<<endl; //REMOVE
+                 if(j == order_array.size()) break;
                  spare -= order_array[j].time;
                  j++;
              }
         
          }
     }
-
-
-
-
-
 
 
 
@@ -260,7 +257,9 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
             min_pos = i;
     }
     cout<<"MIN POS : "<<min_pos<<endl; //REMOVE
+    cout<<"order: in part 1  "<<order_to_be_pushed.food<<endl; //REMOVE
     a[min_pos].work_time += order_to_be_pushed.time;
+    cout<<"+++++++++++++++++++++++++++++\n";
     return a[min_pos];
 }
  
@@ -277,10 +276,11 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE or
      }
      cout<<"MIN POS 2 : "<<min_pos<<endl; //REMOVE
      if(min_pos == 0){ //i.e, no chef that satisfies this condition, so return chef with min worktime only
-         cout<<"bla bla test: "<<order_to_be_pushed.food<<endl; //REMOVE
+         cout<<"order: in if part of 2 "<<order_to_be_pushed.food<<endl;
          chef_with_min_work_time(a,order_to_be_pushed);
      }
      else{
+         cout<<"order in else part of 2: "<<order_to_be_pushed.food<<endl;
          a[min_pos].work_time += order_to_be_pushed.time;
          return a[min_pos];
     }
