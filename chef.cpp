@@ -55,6 +55,7 @@ class CHEF:public CUSTOMER{
 
 
 CHEF& chef_with_min_work_time(vector<CHEF>&); //return by reference concept//fucntion prototype
+CHEF& chef_with_min_work_time(vector<CHEF>& , int, int, NODE);
 int CUSTOMER::count; //static count
 
 
@@ -153,21 +154,16 @@ int main(){
          k++;
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
-             spare_max = order_array[0].time; //since sorted in decreasing order
+             spare_max = order_array[j].time; //since sorted in decreasing order
              spare = spare_max;
              //for first order
-             chef_with_min_work_time(chef).job.push_back(order_array[0]);
-            //  for(int i=0; i<a.size(); i++){
-            //      if(a[i].job.time < min.job.time)
-            //         min = a[i];
-            //  }
+             chef_with_min_work_time(chef).job.push_back(order_array[j++]);
              
-             
-             
-            //  cout<<min_ch
-             
+             //for other orders
             //  while(spare>0){
-                 
+            //      for(k = 0; k<NO_OF_CHEF; k++){
+            //          chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.pushback
+            //      }
             //  }
         
          }
@@ -260,4 +256,18 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a){
             min_pos = i;
     }
     return a[min_pos];
+ }
+ 
+ 
+ 
+ CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
+     int min_pos = 0;
+     for(int i=0; i<a.size(); i++){
+         if(a[i].work_time < spare && (a[i].work_time + order_to_be_pushed.time) < spare_max)
+             min_pos = i;
+     }
+     if(min_pos == 0) //i.e, no chef that satisfies this condition, so return chef with min worktime only
+         chef_with_min_work_time(a);
+     else
+         return a[min_pos];
  }
