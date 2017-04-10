@@ -54,7 +54,7 @@ class CHEF:public CUSTOMER{
 };
 
 
-CHEF& chef_with_min_work_time(vector<CHEF>&); //return by reference concept//fucntion prototype
+CHEF& chef_with_min_work_time(vector<CHEF>& , NODE); //return by reference concept//fucntion prototype
 CHEF& chef_with_min_work_time(vector<CHEF>& , int, int, NODE);
 int CUSTOMER::count; //static count
 
@@ -155,15 +155,18 @@ int main(){
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare_max = order_array[0].time; //since sorted in decreasing order
              spare = spare_max;
+             
              //for first order
-             chef_with_min_work_time(chef).job.push_back(order_array[j++]);
+             if(j+1 >= order_array.size()) break;
+             chef_with_min_work_time(chef,order_array[j]).job.push_back(order_array[j]);
+             j++;
              
              //for other orders
              while(spare>0 && j< (order_array.size()) ){
+                 if(j+1 >= order_array.size()) break;
                  chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.push_back(order_array[j]);
                  spare -= order_array[j].time;
                  j++;
-                 if(j+1 > order_array.size()) break;
              }
         
          }
@@ -249,25 +252,32 @@ bool compare(NODE a,NODE b){
 
 
 
-CHEF& chef_with_min_work_time(vector<CHEF> &a){
+CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
     int min_pos = 0;
     for(int i=0; i<a.size(); i++){
         if(a[i].work_time < a[min_pos].work_time)
             min_pos = i;
     }
+    cout<<"MIN POS : "<<min_pos<<endl;
+    a[min_pos].work_time += order_to_be_pushed.time;
     return a[min_pos];
- }
+}
  
  
  
- CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
+CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
      int min_pos = 0;
      for(int i=0; i<a.size(); i++){
-         if(a[i].work_time < spare && (a[i].work_time + order_to_be_pushed.time) < spare_max)
-             min_pos = i;
+         if((a[i].work_time < spare) && ((a[i].work_time + order_to_be_pushed.time) < spare_max)){
+              min_pos = i;
+              //cout<<"CURRENT min pos : "<<min_pos<<endl;
+         }
      }
+     cout<<"MIN POS 2 : "<<min_pos<<endl;
      if(min_pos == 0) //i.e, no chef that satisfies this condition, so return chef with min worktime only
-         chef_with_min_work_time(a);
-     else
+         chef_with_min_work_time(a,order_to_be_pushed);
+     else{
+         a[min_pos].work_time += order_to_be_pushed.time;
          return a[min_pos];
- }
+     }
+}
