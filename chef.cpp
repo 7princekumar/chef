@@ -24,6 +24,8 @@ int max_of_vector(vector<NODE>);
 bool compare(NODE,NODE);
 
 
+
+
 //classes
 class ORDER{
     public:
@@ -48,10 +50,11 @@ class CUSTOMER:public ORDER{
 class CHEF:public CUSTOMER{
      public:
      vector<NODE>job;
+     int work_time;
 };
 
 
-
+CHEF& chef_with_min_work_time(vector<CHEF>&); //return by reference concept//fucntion prototype
 int CUSTOMER::count; //static count
 
 
@@ -97,6 +100,9 @@ int main(){
     //create instance of chefs
     vector<CHEF> chef;
     chef.resize(NO_OF_CHEF); ////////FIX IT IN FUTURE, let there be any chef for now
+    for(i=0; i<NO_OF_CHEF; i++)
+        chef[i].work_time = 0;
+    
 
     //NEW ALGO
     //1. SORT THE NODE ARRAY in decreasing order
@@ -109,33 +115,70 @@ int main(){
 
 
     //2. Push it to chef accordingly
+    // int k = -1; //for chefs
+    // int spare = 0;
+    // for(i=0; i<no_of_customers; i++){
+    //      k++;
+    //      order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
+    //      for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
+    //          spare = order_array[0].time; //since sorted in decreasing order
+
+    //          if(chef[k].job.empty()){
+    //             //assign the first order of new customer to an empty chef
+    //             if(k+1 >= NO_OF_CHEF) break;
+    //             if(j+1 >= order_array.size()) break;
+    //             chef[k++].job.push_back(order_array[j++]); //k++ since after insertion, go to next chef
+    //          }
+    //          else{
+    //              if(k+1 >= NO_OF_CHEF) break;
+    //              if(j+1 >= order_array.size()) break;
+    //              chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
+    //          }
+
+    //          while(spare>0){
+    //              spare -= order_array[j].time;
+    //              chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
+    //              if(j+1 > order_array.size()) break;
+    //          }
+    //      }
+    // }
+
+
+    //VERSION 3 algo
+    //2. Push it to chef accordingly
     int k = -1; //for chefs
     int spare = 0;
+    int spare_max = 0;
     for(i=0; i<no_of_customers; i++){
          k++;
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
-             spare = order_array[0].time; //since sorted in decreasing order
-
-             if(chef[k].job.empty()){
-                //assign the first order of new customer to an empty chef
-                if(k+1 >= NO_OF_CHEF) break;
-                if(j+1 >= order_array.size()) break;
-                chef[k++].job.push_back(order_array[j++]); //k++ since after insertion, go to next chef
-             }
-             else{
-                 if(k+1 >= NO_OF_CHEF) break;
-                 if(j+1 >= order_array.size()) break;
-                 chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
-             }
-
-             while(spare>0){
-                 spare -= order_array[j].time;
-                 chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
-                 if(j+1 > order_array.size()) break;
-             }
+             spare_max = order_array[0].time; //since sorted in decreasing order
+             spare = spare_max;
+             //for first order
+             chef_with_min_work_time(chef).job.push_back(order_array[0]);
+            //  for(int i=0; i<a.size(); i++){
+            //      if(a[i].job.time < min.job.time)
+            //         min = a[i];
+            //  }
+             
+             
+             
+            //  cout<<min_ch
+             
+            //  while(spare>0){
+                 
+            //  }
+        
          }
     }
+
+
+
+
+
+
+
 
 
     //testing the order's list of customers by printing
@@ -207,3 +250,14 @@ int max_of_vector(vector<NODE> V){
 bool compare(NODE a,NODE b){
     return (a.time > b.time);
 }
+
+
+
+CHEF& chef_with_min_work_time(vector<CHEF> &a){
+    int min_pos = 0;
+    for(int i=0; i<a.size(); i++){
+        if(a[i].work_time < a[min_pos].work_time)
+            min_pos = i;
+    }
+    return a[min_pos];
+ }
