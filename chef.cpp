@@ -268,8 +268,9 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
 CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
      int min_pos = 0;
      for(int i=0; i<a.size(); i++){
-         if((a[i].work_time < spare) && ((a[i].work_time + order_to_be_pushed.time) < spare_max)){
-              min_pos = i;
+         if((a[i].work_time < spare) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
+              min_pos = i; ////CHECK
+              break;
               //cout<<"CURRENT min pos : "<<min_pos<<endl;
          }
      }
@@ -279,5 +280,5 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE or
      else{
          a[min_pos].work_time += order_to_be_pushed.time;
          return a[min_pos];
-     }
+    }
 }
