@@ -217,6 +217,7 @@ int menu_time(string sample){
      if (sample == "dosa")   return 30;
      if (sample == "tea")    return 5;
      if (sample == "samosa") return 7;
+     if (sample == "samosa2") return 7;
      if (sample == "coffee") return 5;
      if (sample == "noodle") return 20;
      if (sample == "friedrice") return 25;
@@ -258,7 +259,7 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
         if(a[i].work_time < a[min_pos].work_time)
             min_pos = i;
     }
-    cout<<"MIN POS : "<<min_pos<<endl;
+    cout<<"MIN POS : "<<min_pos<<endl; //REMOVE
     a[min_pos].work_time += order_to_be_pushed.time;
     return a[min_pos];
 }
@@ -268,14 +269,16 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
 CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
      int min_pos = 0;
      for(int i=0; i<a.size(); i++){
-         if((a[i].work_time < spare) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
+         if((a[i].work_time <= (spare_max -spare)) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
               min_pos = i; 
               break;
          }
      }
-     //cout<<"MIN POS 2 : "<<min_pos<<endl; //REMOVE
-     if(min_pos == 0) //i.e, no chef that satisfies this condition, so return chef with min worktime only
+     cout<<"MIN POS 2 : "<<min_pos<<endl; //REMOVE
+     if(min_pos == 0){ //i.e, no chef that satisfies this condition, so return chef with min worktime only
+         cout<<"bla bla test: "<<order_to_be_pushed.food<<endl; //REMOVE
          chef_with_min_work_time(a,order_to_be_pushed);
+     }
      else{
          a[min_pos].work_time += order_to_be_pushed.time;
          return a[min_pos];
