@@ -162,7 +162,7 @@ int main(){
              j++;
              
              //for other orders
-             while(spare>0 && j<= (order_array.size()) ){
+             while(spare>=0 && j<= (order_array.size()) ){
                  if(j+1 > order_array.size()) break;
                  chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.push_back(order_array[j]);
                  spare -= order_array[j].time;
@@ -269,7 +269,8 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
 CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
      int min_pos = 0;
      for(int i=0; i<a.size(); i++){
-         if((a[i].work_time <= (spare_max -spare)) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
+         //if((a[i].work_time <= (spare_max -spare)) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
+         if((a[i].work_time + order_to_be_pushed.time) <= spare_max){
               min_pos = i; 
               break;
          }
