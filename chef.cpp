@@ -147,24 +147,24 @@ int main(){
 
     //VERSION 3 algo
     //2. Push it to chef accordingly
-    int k = -1; //for chefs
+    int k = 0; //for chefs
     int spare = 0;
     int spare_max = 0;
     for(i=0; i<no_of_customers; i++){
-         k++;
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
-             spare_max = order_array[j].time; //since sorted in decreasing order
+             spare_max = order_array[0].time; //since sorted in decreasing order
              spare = spare_max;
              //for first order
              chef_with_min_work_time(chef).job.push_back(order_array[j++]);
              
              //for other orders
-            //  while(spare>0){
-            //      for(k = 0; k<NO_OF_CHEF; k++){
-            //          chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.pushback
-            //      }
-            //  }
+             while(spare>0 && j< (order_array.size()) ){
+                 chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.push_back(order_array[j]);
+                 spare -= order_array[j].time;
+                 j++;
+                 if(j+1 > order_array.size()) break;
+             }
         
          }
     }
