@@ -55,7 +55,7 @@ class CHEF:public CUSTOMER{
 
 
 CHEF& chef_with_min_work_time(vector<CHEF>& , NODE); //return by reference concept//fucntion prototype
-CHEF& chef_with_min_work_time(vector<CHEF>& , int, int, NODE);
+CHEF& chef_with_min_work_time(vector<CHEF>&, int, NODE);
 int CUSTOMER::count; //static count
 
 
@@ -105,7 +105,7 @@ int main(){
         chef[i].work_time = 0;
     
 
-    //NEW ALGO
+    //ALGO
     //1. SORT THE NODE ARRAY in decreasing order
     for(i = 0; i<no_of_customers; i++){
         sort(c[i].order_node.begin(), c[i].order_node.end(), compare);  //order_node is now sorted
@@ -114,63 +114,24 @@ int main(){
         cout<<endl;
     }
 
-
     //2. Push it to chef accordingly
-    // int k = -1; //for chefs
-    // int spare = 0;
-    // for(i=0; i<no_of_customers; i++){
-    //      k++;
-    //      order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
-    //      for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
-    //          spare = order_array[0].time; //since sorted in decreasing order
-
-    //          if(chef[k].job.empty()){
-    //             //assign the first order of new customer to an empty chef
-    //             if(k+1 >= NO_OF_CHEF) break;
-    //             if(j+1 >= order_array.size()) break;
-    //             chef[k++].job.push_back(order_array[j++]); //k++ since after insertion, go to next chef
-    //          }
-    //          else{
-    //              if(k+1 >= NO_OF_CHEF) break;
-    //              if(j+1 >= order_array.size()) break;
-    //              chef[++k].job.push_back(order_array[j++]); //++k since go to next insertion and then insert
-    //          }
-
-    //          while(spare>0){
-    //              spare -= order_array[j].time;
-    //              chef[k].job.push_back(order_array[j++]);  //j++ since after insertion, point to next order of customer [i]
-    //              if(j+1 > order_array.size()) break;
-    //          }
-    //      }
-    // }
-
-
-    //VERSION 3 algo
-    //2. Push it to chef accordingly
-    int k = 0; //for chefs
-    int spare = 0;
     int spare_max = 0;
     for(i=0; i<no_of_customers; i++){
          order_array = c[i].order_node; //order_array is sorted list of orders of customer[i]
          for(j=0; j<order_array.size(); j++){ //iterate over this array and assign its order to chefs accordingly
              spare_max = order_array[0].time; //since sorted in decreasing order
-             spare = spare_max;
              
              //for first order
              chef_with_min_work_time(chef,order_array[j]).job.push_back(order_array[j]);
              j++;
              
              //for other orders
-             while(spare>=0 || j<= (order_array.size())){
+             while(j<= (order_array.size())){
                  if(j+1 > order_array.size()) break;
-                 cout<<"J ------------------"<<j<<endl; //REMOVE
-                 chef_with_min_work_time(chef, spare, spare_max, order_array[j]).job.push_back(order_array[j]);
-                 cout<<"J ::::::::::::::::: "<<j<<endl; //REMOVE
+                 chef_with_min_work_time(chef, spare_max, order_array[j]).job.push_back(order_array[j]);
                  if(j == order_array.size()) break;
-                 spare -= order_array[j].time;
                  j++;
              }
-        
          }
     }
 
@@ -256,32 +217,25 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, NODE order_to_be_pushed){
         if(a[i].work_time < a[min_pos].work_time)
             min_pos = i;
     }
-    cout<<"MIN POS : "<<min_pos<<endl; //REMOVE
-    cout<<"order: in part 1  "<<order_to_be_pushed.food<<endl; //REMOVE
     a[min_pos].work_time += order_to_be_pushed.time;
-    cout<<"+++++++++++++++++++++++++++++\n";
     return a[min_pos];
 }
  
  
  
-CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare, int spare_max, NODE order_to_be_pushed){
+CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare_max, NODE order_to_be_pushed){
      int min_pos = 0;
      for(int i=0; i<a.size(); i++){
-         //if((a[i].work_time <= (spare_max -spare)) && ((a[i].work_time + order_to_be_pushed.time) <= spare_max)){
          if((a[i].work_time + order_to_be_pushed.time) <= spare_max){
               min_pos = i; 
               break;
          }
      }
-     cout<<"MIN POS 2 : "<<min_pos<<endl; //REMOVE
      if(min_pos == 0){ //i.e, no chef that satisfies this condition, so return chef with min worktime only
-         cout<<"order: in if part of 2 "<<order_to_be_pushed.food<<endl;
-         chef_with_min_work_time(a,order_to_be_pushed);
+         return chef_with_min_work_time(a,order_to_be_pushed);
      }
      else{
-         cout<<"order in else part of 2: "<<order_to_be_pushed.food<<endl;
          a[min_pos].work_time += order_to_be_pushed.time;
-         return a[min_pos];
     }
+    return a[min_pos];
 }
