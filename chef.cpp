@@ -2,7 +2,7 @@
                      OOP OPEN ENDED PROJECT, 2017
               SIDDAGANGA INSTITUTE OF TECHNOLOGY, TUMKUR
                 
-            NAME OF THE PROJECT :::: Job management of Chefs.
+          NAME OF THE PROJECT :::: Job/Time management of Chefs.
                 
                       PROJECT SUBMITTED BY: 
                   1. Prince Kumar - 1SI15CS080
@@ -67,6 +67,7 @@ int menu_time(string);
 bool compare(NODE,NODE);
 CHEF& chef_with_min_work_time(vector<CHEF>& , NODE); 
 CHEF& chef_with_min_work_time(vector<CHEF>&, int, NODE);
+
 int CUSTOMER::count; //static count
 
 
@@ -131,7 +132,7 @@ int main(){
     for(i=0; i<no_of_customers; i++){
          order_array = c[i].order_node; 
          //order_array is sorted list of orders of customer[i]
-         //iterate over this array and assign its order to chefs accordingly
+         //iterate over this array & assign its order to chefs accordingly
          for(j=0; j<order_array.size(); j++){ 
              spare_max = order_array[0].time; //since sorted in decreasing order
              
@@ -180,22 +181,25 @@ int main(){
 
 
 ///////......... OUTPUT - LISTS OF CUSTOMERS and THEIR ORDERS .........///////// 
+    cout<<"======================================================================\n";
     for(i=0; i<no_of_customers; i++){
         cout<<"\n\t                 CUSTOMER : ["<<i<<"]\n";
         cout<<"\t\t  "<<setw(9)<<"Name "<<setw(8)<<" Time"<<setw(9)<<"Cost\n";
+        cout<<"\t\t  "<<setw(9)<<"____ "<<setw(8)<<" ____"<<setw(9)<<"____\n";
         for(j=0; j<c[i].order_node.size(); j++){
             cout<<"\t\t"<<setw(10)<<c[i].order_node[j].food<<setw(8)<<
             c[i].order_node[j].time<<setw(8)<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
     }
+    cout<<"______________________________________________________________________\n";
     
     
-    cout<<"Minimum time required to complete orders of customers.\n";
+    cout<<"\n\tMinimum time required to complete orders of customers.\n";
     for(i=0; i<no_of_customers; i++){
-        cout<<"Customer ["<<i<<"] :"<<c[i].min_time<<endl;
+        cout<<"\t\tCustomer ["<<i<<"] : "<<c[i].min_time<<" minutes"<<endl;
     }
-    
+    cout<<"______________________________________________________________________\n\n";
     
 
 /////....... OUTPUT - LISTS OF CHEF and THEIR WORK DISTRIBUTION ......./////// 
@@ -203,11 +207,12 @@ int main(){
         cout<<"\n             CHEF["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
-            cout<<"c"<<chef[i].job[j].customer_num<<"_"<<chef[i].job[j].time<<" -> ";
+            cout<<"c"<<chef[i].job[j].customer_num<<"_"<<chef[i].job[j].food<<
+            "("<<chef[i].job[j].time<<")"<<" -> ";
         }
         cout<<endl;
     }
-    
+    cout<<"\n\n======================================================================\n";
 
     return 0;
 }
