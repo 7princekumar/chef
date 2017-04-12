@@ -43,6 +43,7 @@ class CUSTOMER:public ORDER{
      int static count;
      int c_num; //customer_number
      public:
+     int min_time;
      int order_count;
      static int get_customer_num(){
        return count;
@@ -56,7 +57,6 @@ class CHEF:public CUSTOMER{
      public:
      vector<NODE>job;
      int work_time;
-    // vector<int>customer_min_time;
 };
 
 
@@ -73,7 +73,7 @@ int CUSTOMER::count; //static count
 
 /////////////////////////////main/////////////////////////////////
 int main(){
-    int i,j,k=0;
+    int i,j;
     string name;
     NODE item;
     vector<NODE> order_array;
@@ -149,6 +149,30 @@ int main(){
              }
          }
     }
+    
+    
+    //find min time for customers' order to finish
+    for(i=0; i<no_of_customers; i++){
+        int final_max_time = 0;
+        for(j=0; j<chef.size(); j++){
+            int max_loc  = 0;
+            int max_time = 0;
+            for(int k= (int(chef[j].job.size()) - 1); k>= -1; k--){
+                if(chef[j].job[k].customer_num == i){
+                    max_loc = k; //else 0
+                    break;
+                }
+            }
+
+            if(chef[j].job[max_loc].customer_num == i)
+                for(int k =0; k<= max_loc; k++){
+                    max_time += chef[j].job[k].time;
+                }
+            if(max_time > final_max_time)
+                final_max_time = max_time;
+        }
+        c[i].min_time = final_max_time;
+    }
 
 
 
@@ -163,6 +187,14 @@ int main(){
         }
         cout<<endl;
     }
+    
+    
+    cout<<"Minimum time required to complete orders of customers.\n";
+    for(i=0; i<no_of_customers; i++){
+        cout<<"Customer ["<<i<<"] :"<<c[i].min_time<<endl;
+    }
+    
+    
 
 /////....... OUTPUT - LISTS OF CHEF and THEIR WORK DISTRIBUTION ......./////// 
     for(i=0; i<chef.size(); i++){
@@ -174,14 +206,6 @@ int main(){
         cout<<endl;
     }
     
-    
-    // for(i=0; i<no_of_customers; i++){
-    //     int max_time = 
-    //     for(j=0; j<chef.size(); j++){
-            
-    //     }
-    // }
-
 
     return 0;
 }
