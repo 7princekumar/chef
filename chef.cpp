@@ -62,6 +62,8 @@ class CHEF:public CUSTOMER{
 
 
 //////////////////////functions prototypes/////////////////////////
+string string_to_upper(string&);
+string string_1_upper(string&);
 int menu_cost(string);
 int menu_time(string);
 bool compare(NODE,NODE);
@@ -188,8 +190,8 @@ int main(){
         cout<<"\t\t  "<<setw(9)<<"Name "<<setw(8)<<" Time"<<setw(9)<<"Cost\n";
         cout<<"\t\t  "<<setw(9)<<"____ "<<setw(8)<<" ____"<<setw(9)<<"____\n";
         for(j=0; j<c[i].order_node.size(); j++){
-            cout<<"\t\t"<<setw(10)<<c[i].order_node[j].food<<setw(8)<<
-            c[i].order_node[j].time<<setw(8)<<c[i].order_node[j].cost<<endl;
+            cout<<"\t\t"<<setw(10)<<string_to_upper(c[i].order_node[j].food)<<
+            setw(8)<<c[i].order_node[j].time<<setw(8)<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
         if(no_of_customers > 1 && i < flag)
@@ -210,7 +212,8 @@ int main(){
         cout<<"\n             CHEF["<<i<<"] :  ";
         //cout<<"Name \t\tTime \tCost\n";
         for(j=0; j<chef[i].job.size(); j++){
-            cout<<"c"<<chef[i].job[j].customer_num<<"_"<<chef[i].job[j].food<<
+            cout<<"c"<<chef[i].job[j].customer_num<<"_"<<
+            string_1_upper(chef[i].job[j].food)<<
             "("<<chef[i].job[j].time<<")"<<" -> ";
         }
         cout<<endl;
@@ -226,6 +229,20 @@ int main(){
 
 
 /////////////////////////function definations///////////////////////////
+
+string string_to_upper(string &s){
+    for(int i=0;i< s.length();i++)
+        s[i]=toupper(s[i]);
+    return s;
+}
+
+string string_1_upper(string &s){
+    for(int i=0; i< 1; i++)
+        s[i]=toupper(s[i]);
+    return s;
+}
+
+
 int menu_time(string sample){
     //input: one order name as string
     //output: time taken to complete that order as integer(mins)
