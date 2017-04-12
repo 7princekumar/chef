@@ -182,6 +182,7 @@ int main(){
 
 ///////......... OUTPUT - LISTS OF CUSTOMERS and THEIR ORDERS .........///////// 
     cout<<"======================================================================\n";
+    int flag = no_of_customers - 1;
     for(i=0; i<no_of_customers; i++){
         cout<<"\n\t                 CUSTOMER : ["<<i<<"]\n";
         cout<<"\t\t  "<<setw(9)<<"Name "<<setw(8)<<" Time"<<setw(9)<<"Cost\n";
@@ -191,6 +192,8 @@ int main(){
             c[i].order_node[j].time<<setw(8)<<c[i].order_node[j].cost<<endl;
         }
         cout<<endl;
+        if(no_of_customers > 1 && i < flag)
+            cout<<"\t\t________________________________\n";
     }
     cout<<"______________________________________________________________________\n";
     
