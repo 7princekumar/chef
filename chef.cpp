@@ -157,6 +157,8 @@ int main(){
         for(j=0; j<chef.size(); j++){
             int max_loc  = 0;
             int max_time = 0;
+            if(chef[j].job.empty()) break;
+            
             for(int k= (int(chef[j].job.size()) - 1); k>= -1; k--){
                 if(chef[j].job[k].customer_num == i){
                     max_loc = k; //else 0
