@@ -213,10 +213,10 @@ int main(){
     
     
     cout<<"\n\tMinimum time required to complete orders of customers and bill.\n";
-    cout<<"\t\t                 Time            Cost\n";
+    cout<<"\t\t                   Time           Cost\n";
     for(i=0; i<no_of_customers; i++){
-        cout<<"\t\tCustomer ["<<i<<"] : "<<c[i].min_time<<" minutes";
-        cout<<"       Rs. "<<c[i].return_total_cost()<<endl;
+        cout<<"\t\tCustomer ["<<i<<"] : "<<setw(4)<<c[i].min_time<<" minutes";
+        cout<<"       Rs."<<setw(3)<<c[i].return_total_cost()<<endl;
     }
     cout<<"______________________________________________________________________\n\n";
     
