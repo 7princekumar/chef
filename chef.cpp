@@ -42,6 +42,7 @@ class ORDER{
 class CUSTOMER:public ORDER{
      int static count;
      int c_num; //customer_number
+     int total_cost;
      public:
      int min_time;
      int order_count;
@@ -50,6 +51,12 @@ class CUSTOMER:public ORDER{
      }
      CUSTOMER(){
          c_num = count++;
+     }
+     int return_total_cost(){
+         total_cost = 0;
+         for(int i =0; i<order_node.size(); i++)
+            total_cost += order_node[i].cost;
+         return total_cost;
      }
 };
 
@@ -204,12 +211,17 @@ int main(){
     cout<<"______________________________________________________________________\n";
     
     
-    cout<<"\n\tMinimum time required to complete orders of customers.\n";
+    
+    cout<<"\n\tMinimum time required to complete orders of customers and bill.\n";
+    cout<<"\t\t                 Time            Cost\n";
     for(i=0; i<no_of_customers; i++){
-        cout<<"\t\tCustomer ["<<i<<"] : "<<c[i].min_time<<" minutes"<<endl;
+        cout<<"\t\tCustomer ["<<i<<"] : "<<c[i].min_time<<" minutes";
+        cout<<"       Rs. "<<c[i].return_total_cost()<<endl;
     }
     cout<<"______________________________________________________________________\n\n";
     
+
+
 
 /////....... OUTPUT - LISTS OF CHEF and THEIR WORK DISTRIBUTION ......./////// 
     for(i=0; i<chef.size(); i++){
@@ -348,3 +360,5 @@ void show_menu(){
     cout<<"   ----------------------------------------------\n";
     cout<<"\n";
 }
+
+
