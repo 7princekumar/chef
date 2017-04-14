@@ -63,9 +63,11 @@ class CHEF:public CUSTOMER{
 
 //////////////////////functions prototypes/////////////////////////
 string string_to_upper(string&);
+string string_to_lower(string&);
 string string_1_upper(string&);
 int menu_cost(string);
 int menu_time(string);
+void show_menu();
 bool compare(NODE,NODE);
 CHEF& chef_with_min_work_time(vector<CHEF>& , NODE); 
 CHEF& chef_with_min_work_time(vector<CHEF>&, int, NODE);
@@ -91,6 +93,7 @@ int main(){
     c.resize(no_of_customers);
 
     ///////////INPUT - get orders from all customers /////////////////
+    show_menu();
     cout<<"\n\nENTER THE NAMES OF THE FOOD ITEMS AND ENTER 'done' IF NO MORE\n";
     for(i=0; i<no_of_customers; i++){
         //reset item and order_array as we need to reuse it
@@ -101,6 +104,7 @@ int main(){
         while(1){
             cout<<"           : ";
             cin>>name;
+            name = string_to_lower(name);
             if(name == "done") break;
             item.food = name;
             item.cost = menu_cost(name);
@@ -236,6 +240,12 @@ string string_to_upper(string &s){
     return s;
 }
 
+string string_to_lower(string &s){
+    for(int i=0;i< s.length();i++)
+        s[i]=tolower(s[i]);
+    return s;
+}
+
 string string_1_upper(string &s){
     for(int i=0; i< 1; i++)
         s[i]=toupper(s[i]);
@@ -312,4 +322,29 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare_max, NODE order_to_be_p
      else
          a[min_pos].work_time += order_to_be_pushed.time;
     return a[min_pos];
+}
+
+
+
+void show_menu(){
+    cout<<"\n\n";
+    cout<<"----------------------------------------------\n";
+    cout<<"|     NAME        COST(Rupees)     TIME(min) |\n";
+    cout<<"|--------------------------------------------|\n";
+    cout<<"|     Idli    "<<setw(9)<<menu_cost("idli")     
+                          <<setw(18)<<menu_time("idli")     <<setw(6)<<"|\n";
+    cout<<"|     Dosa    "<<setw(9)<<menu_cost("dosa")
+                          <<setw(18)<<menu_time("dosa")     <<setw(6)<<"|\n";
+    cout<<"|     Tea     "<<setw(9)<<menu_cost("tea")
+                          <<setw(18)<<menu_time("tea")      <<setw(6)<<"|\n";
+    cout<<"|    Samosa   "<<setw(9)<<menu_cost("samosa")
+                          <<setw(18)<<menu_time("samosa")   <<setw(6)<<"|\n";
+    cout<<"|    Coffee   "<<setw(9)<<menu_cost("coffee")
+                          <<setw(18)<<menu_time("coffee")   <<setw(6)<<"|\n";
+    cout<<"|    Noodle   "<<setw(9)<<menu_cost("noodle")
+                          <<setw(18)<<menu_time("noodle")   <<setw(6)<<"|\n";
+    cout<<"|  Fried Rice "<<setw(9)<<menu_cost("friedrice")
+                          <<setw(18)<<menu_time("friedrice")<<setw(6)<<"|\n";
+    cout<<"----------------------------------------------\n";
+    cout<<"\n";
 }
