@@ -1,4 +1,4 @@
-# chef
+# Job/Time management of Chefs.
 Time management of chef in restaurants. OOP Project 2017
 
    
