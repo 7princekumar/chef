@@ -328,23 +328,23 @@ CHEF& chef_with_min_work_time(vector<CHEF> &a, int spare_max, NODE order_to_be_p
 
 void show_menu(){
     cout<<"\n\n";
-    cout<<"----------------------------------------------\n";
-    cout<<"|     NAME        COST(Rupees)     TIME(min) |\n";
-    cout<<"|--------------------------------------------|\n";
-    cout<<"|     Idli    "<<setw(9)<<menu_cost("idli")     
+    cout<<"   ----------------------------------------------\n";
+    cout<<"   |     NAME        COST(Rupees)     TIME(min) |\n";
+    cout<<"   |--------------------------------------------|\n";
+    cout<<"   |     Idli    "<<setw(9)<<menu_cost("idli")     
                           <<setw(18)<<menu_time("idli")     <<setw(6)<<"|\n";
-    cout<<"|     Dosa    "<<setw(9)<<menu_cost("dosa")
+    cout<<"   |     Dosa    "<<setw(9)<<menu_cost("dosa")
                           <<setw(18)<<menu_time("dosa")     <<setw(6)<<"|\n";
-    cout<<"|     Tea     "<<setw(9)<<menu_cost("tea")
+    cout<<"   |     Tea     "<<setw(9)<<menu_cost("tea")
                           <<setw(18)<<menu_time("tea")      <<setw(6)<<"|\n";
-    cout<<"|    Samosa   "<<setw(9)<<menu_cost("samosa")
+    cout<<"   |    Samosa   "<<setw(9)<<menu_cost("samosa")
                           <<setw(18)<<menu_time("samosa")   <<setw(6)<<"|\n";
-    cout<<"|    Coffee   "<<setw(9)<<menu_cost("coffee")
+    cout<<"   |    Coffee   "<<setw(9)<<menu_cost("coffee")
                           <<setw(18)<<menu_time("coffee")   <<setw(6)<<"|\n";
-    cout<<"|    Noodle   "<<setw(9)<<menu_cost("noodle")
+    cout<<"   |    Noodle   "<<setw(9)<<menu_cost("noodle")
                           <<setw(18)<<menu_time("noodle")   <<setw(6)<<"|\n";
-    cout<<"|  Fried Rice "<<setw(9)<<menu_cost("friedrice")
+    cout<<"   |  Fried Rice "<<setw(9)<<menu_cost("friedrice")
                           <<setw(18)<<menu_time("friedrice")<<setw(6)<<"|\n";
-    cout<<"----------------------------------------------\n";
+    cout<<"   ----------------------------------------------\n";
     cout<<"\n";
 }
